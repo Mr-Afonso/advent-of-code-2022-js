@@ -12,7 +12,21 @@ input.split('\n').map((cal) => {
   }
 })
 
-console.log(Math.max(...calPerElf))
+const topCalPerElf = (top) => {
+  let sumCal = 0
+
+  calPerElf.sort((a, b) => a - b).reverse().map((cal, index) => {
+
+    if (top > index) {
+      sumCal = sumCal + cal
+    }
+
+  })
+
+  return sumCal
+
+}
 
 
 
+console.log(topCalPerElf(3))
