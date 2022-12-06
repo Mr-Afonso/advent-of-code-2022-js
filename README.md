@@ -1,3 +1,11 @@
+# Advent of Code 2022 JS
+
+Advent of Code 2022 in spaghetti JavaScript
+
+## Deno setup
+
+https://deno.land/manual@v1.28.3/getting_started/installation
+
 # Day 1
 
 - git checkout feature/day-1
@@ -54,9 +62,9 @@
 
 # Day 7
 
-- git checkout feature/day-x
+- git checkout feature/day-7
 
-> cd day-x
+> cd day-7
 > deno run --allow-read --watch a.js
 > and
 > deno run --allow-read --watch b.js
