@@ -3,71 +3,74 @@ const input = await Deno.readTextFile("./test.txt")
 
 const cleanInput = input.split('\n')
 
-console.log(cleanInput)
+// console.log(cleanInput)
 
-// examples
-// $ ls
-// $ cd ..
-// $ cd /
-// $ cd szlbls 
-// dir npmncvhh
-// 81366 dwbgr.ztr
+let allDir = []
+let allFilesPerDir = []
+let total = 0
+let dir = ''
+let cd = '$ cd /'
+let colectDependent = ''
 
-// template
-let obj = {
-  level: 0,
-  name: '',
-  files: [],
-  dirs: [],
-  sizeWithoutDirs: 0
-}
+cleanInput.map((element, index) => {
 
-let array = []
-let level = -1
-let names = ''
-let files = []
-let dirs = []
-
-cleanInput.map((element) => {
-
-  obj.level = level
-  obj.name = names
-  obj.files = files
-  obj.dirs = dirs
-
-  array.push(obj)
-
-  if (element.includes('$ cd /')) {
-
+  if (element.includes('$') && !element.includes('$ ls') && !element.includes('$ cd ..') && index !== 0) {
+    allFilesPerDir.push({
+      dir: cd.split(' ')[2],
+      total: total,
+      dependent: allDir.filter((e) => e !== cd.split(' ')[2])
+    })
+    dir = ''
+    total = 0
+    cd = element
+    allDir = []
   }
 
-  if (element.includes('$ cd ..')) {
-    level--
-    names = ''
-    files = []
-    dirs = []
+  if (element.includes('dir')) {
+    allDir.push(element.split(' ')[1])
   }
 
-  if (element.includes('$ ls')) {
-    level++
+  if (element.replace(/[^0-9]/g, '') !== '') {
+    total = total + Number(element.replace(/[^0-9]/g, ''))
   }
 
-  if (element.includes('dir ')) {
-    dirs.push(element)
+  if (index === cleanInput.length - 1) {
+    allFilesPerDir.push({
+      dir: cd.split(' ')[2],
+      total: total,
+      dependent: allDir.filter((e) => e !== cd.split(' ')[2])
+    })
   }
-
-  if (element.includes('$ cd ') && !element.includes('$ cd ..') && !element.includes('$ cd /')) {
-    console.log(element)
-    names = element
-
-  }
-
-  if (/\d/.test(element)) {
-    files.push(element)
-  }
-
-  // console.log(obj)
 
 })
 
-console.log(array)
+// console.log(allFilesPerDir)
+
+
+const findTotal = (dependent) => {
+  return allFilesPerDir.filter(e => e.dir === dependent)[0].total
+}
+
+allFilesPerDir.map((element, index) => {
+
+  if (index > 0) {
+    if (element.dependent.length > 0) {
+      //  find all dependents
+      // array of all dependents
+
+      element.total += element.dependent.map((el) => {
+        return findTotal(el)
+      }).reduce((a, b) => a + b)
+    }
+  }
+})
+
+// console.log(allFilesPerDir)
+
+let totall = 0
+
+allFilesPerDir.filter((e) => e.total < 100000).map((el) => {
+  totall += el.total
+})
+
+console.log(totall)
