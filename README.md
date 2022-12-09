@@ -132,15 +132,15 @@ https://deno.land/manual@v1.28.3/getting_started/installation
 
 <br>
 
-# Day 8 ⛔
+# Day 8 ✅
 
 ### Branch:
 
-`git checkout feature/day-x`
+`git checkout feature/day-8`
 
 ### Run
 
-> cd day-x
+> cd day-8
 >
 > deno run --allow-read --watch a.js
 >
