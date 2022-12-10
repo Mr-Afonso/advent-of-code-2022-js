@@ -1,224 +1,454 @@
-# Day 1
+# Advent of Code 2022 JS
 
-- git checkout feature/day-1
+Advent of Code 2022 in spaghetti JavaScript
+
+## Deno setup
+
+https://deno.land/manual@v1.28.3/getting_started/installation
+
+## Day 1 ✅
+
+### Branch:
+
+`git checkout feature/day-1`
+
+### Run
 
 > cd day-1
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 2
+<br>
 
-- git checkout feature/day-2
+# Day 2 ✅
+
+### Branch:
+
+`git checkout feature/day-2`
+
+### Run
 
 > cd day-2
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 3
+<br>
 
-- git checkout feature/day-3
+# Day 3 ✅
+
+### Branch:
+
+`git checkout feature/day-3`
+
+### Run
 
 > cd day-3
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 4
+<br>
 
-- git checkout feature/day-4
+# Day 4 ✅
+
+### Branch:
+
+`git checkout feature/day-4`
+
+### Run
 
 > cd day-4
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 5
+<br>
 
-- git checkout feature/day-5
+# Day 5 ✅
+
+### Branch:
+
+`git checkout feature/day-5`
+
+### Run
 
 > cd day-5
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 6
+<br>
 
-- git checkout feature/day-6
+# Day 6 ✅
+
+### Branch:
+
+`git checkout feature/day-6`
+
+### Run
 
 > cd day-6
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 7
+<br>
 
-- git checkout feature/day-x
+# Day 7 ⛔
 
-> cd day-x
+### Branch:
+
+`git checkout feature/day-7`
+
+### Run
+
+> cd day-7
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 8
+<br>
 
-- git checkout feature/day-x
+# Day 8 ✅
 
-> cd day-x
+### Branch:
+
+`git checkout feature/day-8`
+
+### Run
+
+> cd day-8
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 9
+<br>
 
-- git checkout feature/day-x
+# Day 9 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 10
+<br>
 
-- git checkout feature/day-x
+# Day 10 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 11
+<br>
 
-- git checkout feature/day-x
+# Day 11 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 12
+<br>
 
-- git checkout feature/day-x
+# Day 12 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 13
+<br>
 
-- git checkout feature/day-x
+# Day 13 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 14
+<br>
 
-- git checkout feature/day-x
+# Day 14 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 15
+<br>
 
-- git checkout feature/day-x
+# Day 15 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 16
+<br>
 
-- git checkout feature/day-x
+# Day 16 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 17
+<br>
 
-- git checkout feature/day-x
+# Day 17 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 18
+<br>
 
-- git checkout feature/day-x
+# Day 18 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 19
+<br>
 
-- git checkout feature/day-x
+# Day 19 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 20
+<br>
 
-- git checkout feature/day-x
+# Day 20 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 21
+<br>
 
-- git checkout feature/day-x
+# Day 21 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 22
+<br>
 
-- git checkout feature/day-x
+# Day 22 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
+> deno run --allow-read --watch b.js
+> <br>
+
+# Day 23 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
+
+> cd day-x
+>
+> deno run --allow-read --watch a.js
+>
+> and
+>
 > deno run --allow-read --watch b.js
 
-# Day 23
+<br>
 
-- git checkout feature/day-x
+# Day 24 ⛔
+
+### Branch:
+
+`git checkout feature/day-x`
+
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
 
-# Day 24
+<br>
 
-- git checkout feature/day-x
+# Day 25 ⛔
 
-> cd day-x
-> deno run --allow-read --watch a.js
-> and
-> deno run --allow-read --watch b.js
+### Branch:
 
-# Day 25
+`git checkout feature/day-x`
 
-- git checkout feature/day-x
+### Run
 
 > cd day-x
+>
 > deno run --allow-read --watch a.js
+>
 > and
+>
 > deno run --allow-read --watch b.js
