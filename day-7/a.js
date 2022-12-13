@@ -1,76 +1,150 @@
-// const input = await Deno.readTextFile("./input.txt")
-const input = await Deno.readTextFile("./test.txt")
+const input = await Deno.readTextFile("./input.txt")
+// const input = await Deno.readTextFile("./test.txt")
 
 const cleanInput = input.split('\n')
 
 // console.log(cleanInput)
 
-let allDir = []
-let allFilesPerDir = []
-let total = 0
-let dir = ''
-let cd = '$ cd /'
-let colectDependent = ''
-
-cleanInput.map((element, index) => {
-
-  if (element.includes('$') && !element.includes('$ ls') && !element.includes('$ cd ..') && index !== 0) {
-    allFilesPerDir.push({
-      dir: cd.split(' ')[2],
-      total: total,
-      dependent: allDir.filter((e) => e !== cd.split(' ')[2])
-    })
-    dir = ''
-    total = 0
-    cd = element
-    allDir = []
+class Folder {
+  constructor() {
+    this.name = ''
+    this.father = ''
+    this.totalSize = 0
+    this.dependency = []
+    this.dependencyFile = []
   }
 
-  if (element.includes('dir')) {
-    allDir.push(element.split(' ')[1])
+  createFolderName(name) {
+    this.name = name
   }
 
-  if (element.replace(/[^0-9]/g, '') !== '') {
-    total = total + Number(element.replace(/[^0-9]/g, ''))
+  createFolderFather(name) {
+    this.father = name
   }
 
-  if (index === cleanInput.length - 1) {
-    allFilesPerDir.push({
-      dir: cd.split(' ')[2],
-      total: total,
-      dependent: allDir.filter((e) => e !== cd.split(' ')[2])
-    })
+  calculateTotalSize(size) {
+    this.totalSize += size
+  }
+
+  addDependencyFile(file) {
+    this.dependencyFile.push(file)
+  }
+
+
+  addDependency(dependency) {
+    this.dependency.push(dependency)
+  }
+
+
+}
+
+let files = []
+let inside = false
+
+cleanInput.map((element) => {
+
+  if (element.includes('$ cd ') && !element.includes('$ cd ..')) {
+    let file = new Folder()
+    file.name = element.split(' ')[2]
+
+    files.push(
+      file
+    )
   }
 
 })
 
-// console.log(allFilesPerDir)
+let fileName = ''
 
+cleanInput.map((element) => {
 
-const findTotal = (dependent) => {
-  return allFilesPerDir.filter(e => e.dir === dependent)[0].total
-}
+  if (element.includes('$ cd ') && !element.includes('$ cd ..') && files.some((e) => {
+    fileName = e.name
+    return `$ cd ${e.name}` === element
+  })) {
+    inside = true
+  }
 
-allFilesPerDir.map((element, index) => {
+  if (inside) {
 
-  if (index > 0) {
-    if (element.dependent.length > 0) {
-      //  find all dependents
-      // array of all dependents
+    if (element.includes('dir')) {
 
-      element.total += element.dependent.map((el) => {
-        return findTotal(el)
-      }).reduce((a, b) => a + b)
+      files.filter((e) => e.name === element.split(' ')[1])[0].createFolderFather(fileName)
+
+      files.filter((e) => e.name === fileName)[0].addDependency({
+        father: fileName,
+        son: element.split(' ')[1]
+      })
+    }
+
+    if (element.replace(/[^0-9]/g, '') !== '') {
+      files.filter((e) => e.name === fileName)[0].calculateTotalSize(Number(element.replace(/[^0-9]/g, '')))
     }
   }
 })
 
-// console.log(allFilesPerDir)
+// add all dependencies
+files.map((element) => {
 
-let totall = 0
+  if (element.dependency.length > 0) {
 
-allFilesPerDir.filter((e) => e.total < 100000).map((el) => {
-  totall += el.total
+    element.dependency.map((e) => {
+      element.addDependencyFile(
+        files.filter((file) => file.name === e.son && element.name === e.father)[0]
+      )
+    })
+
+  }
 })
 
-console.log(totall)
+// bring the recursive
+const addDependencies = (array) => {
+
+  array.map((file) => {
+
+    // if (array.some(e => e.dependency.includes(file.name))) {
+    //   array.filter(e => e.dependency.includes(file.name))[0].calculateTotalSize(file.totalSize)
+    // }
+
+    if (array.some(e => e.dependency.some(el => el.father === 'a' && el.son === file.name))) {
+
+      array.filter(e => e.dependency.some(el => el.father === 'a' && el.son === file.name))[0].calculateTotalSize(file.totalSize)
+    }
+
+    // console.log('in', file.name)
+    // console.log('in', file.totalSize)
+    if (file.dependency.length > 0) {
+      return null
+    } else {
+      // console.log('up', file.name)
+      // console.log('up', file.totalSize)
+      addDependencies(file.dependency)
+      // console.log('down', file.name)
+      // console.log('down', file)
+    }
+
+  })
+
+}
+
+addDependencies(files)
+
+// All folders under or equal to 10000
+let array = []
+
+files.filter(e => e.name !== '/').map((element) => {
+
+  if (element.totalSize < 100000) {
+    array.push(element.totalSize)
+  }
+})
+
+// console.log(files.filter(e => e.name !== '/'))
+// await Deno.writeTextFile('./xxx.txt', files)
+// console.log(array)
+// console.log(array.reduce((a, b) => a + b))
+
+files.map((e) => {
+  console.log(e.name)
+  console.log(e.dependency)
+})
