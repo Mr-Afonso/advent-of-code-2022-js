@@ -1,7 +1,7 @@
 const input = await Deno.readTextFile("./input.txt")
 // const input = await Deno.readTextFile("./test.txt")
 
-const cleanInput = input.split('\n')
+const cleanInput = input.split('\r\n')
 
 // console.log(cleanInput)
 
@@ -52,6 +52,18 @@ cleanInput.map((element) => {
     )
   }
 
+  if (index === cleanInput.length - 1) {
+
+    if (level + memLevel === 1) {
+      section++
+    }
+
+    finalArray.push({
+      level: level,
+      total: total,
+      section: section
+    })
+  }
 })
 
 let fileName = ''
