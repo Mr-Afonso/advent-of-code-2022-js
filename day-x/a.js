@@ -1,3 +1,6 @@
 const input = await Deno.readTextFile("./input.txt")
+// const input = await Deno.readTextFile("./test.txt")
 
-input.split('\n')
+const cleanInput = input.split('\n')
+
+console.log(cleanInput)

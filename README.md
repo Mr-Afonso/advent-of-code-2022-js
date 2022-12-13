@@ -124,7 +124,7 @@ https://deno.land/manual@v1.28.3/getting_started/installation
 
 > cd day-7
 >
-> deno run --allow-read --watch a.js
+> deno run --allow-all --watch a.js
 >
 > and
 >
