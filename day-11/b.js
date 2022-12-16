@@ -1,5 +1,5 @@
-// const input = await Deno.readTextFile("./input.txt")
-const input = await Deno.readTextFile("./test.txt")
+const input = await Deno.readTextFile("./input.txt")
+// const input = await Deno.readTextFile("./test.txt")
 
 const cleanInput = input.split('\n')
 
@@ -41,7 +41,7 @@ class Monkey {
       } else {
         operatorValue = this.operator
       }
-      operatorValue = Number(item)
+
       if (this.operatorChar === '*') {
         this.itemsBeforeThrow.push(Number(item) * operatorValue)
       } else {
@@ -51,13 +51,13 @@ class Monkey {
 
   }
 
-  throw() {
+  throw(divider) {
     if (this.items.length > 0) {
       this.operation()
 
       this.itemsBeforeThrow.map((item) => {
         this.inspectedItems++
-        const worryLevel = Math.floor(item)
+        const worryLevel = item % divider
         if (worryLevel % this.divider === 0) {
           this.nextMonkey.push({
             monkey: this.nextMonkeyTrue,
@@ -91,11 +91,14 @@ cleanInput.map((_, index) => {
   }
 })
 
-for (let index = 0; index < 20; index++) {
+// Part II big "thing"
+const divider = monkeys.map((m) => m.divider).reduce((a, b) => a * b, 1)
+
+for (let index = 0; index < 10000; index++) {
   for (let z = 0; z < monkeys.length; z++) {
 
     if (monkeys[z].items.length > 0) {
-      monkeys[z].throw()
+      monkeys[z].throw(divider)
       monkeys[z].nextMonkey.map((element) => {
         monkeys[element.monkey].addItem(element.worryLevel)
       })
@@ -105,7 +108,6 @@ for (let index = 0; index < 20; index++) {
   }
 }
 
-console.log(monkeys)
 
 let inspectedItems = []
 
