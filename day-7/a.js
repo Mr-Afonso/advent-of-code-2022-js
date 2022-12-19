@@ -5,242 +5,158 @@ const cleanInput = input.split('\r\n')
 
 // console.log(cleanInput)
 
-class TreeNode {
-  constructor(value) {
-    this.value = value
-    this.size = 0
-    this.descendants = []
-    this.level = -1
+class Folder {
+  constructor() {
+    this.name = ''
+    this.father = ''
+    this.totalSize = 0
+    this.dependency = []
+    this.dependencyFile = []
   }
 
-  addSize(size) {
-    this.size += size
+  createFolderName(name) {
+    this.name = name
   }
 
-}
+  createFolderFather(name) {
+    this.father = name
+  }
 
-const base = new TreeNode('/')
-let size = 0
-let test = []
+  calculateTotalSize(size) {
+    this.totalSize += size
+  }
 
-cleanInput.map((element, index) => {
-  // enter level
-if(element.includes('$') && !element.includes('$ ls') && !element.includes('$ cd ..') && index !== 0) {
-  // base.level++
-  // base.descendants.push(new TreeNode(element.split(' ')[2]))
-  // console.log(size)
+  addDependencyFile(file) {
+    this.dependencyFile.push(file)
+  }
 
-  test[test.length-1] += size
-  test.push(element.split(' ')[2])
-  size = 0
-}
 
-if(element.includes('$ ls')) {
- // console.log(test)
+  addDependency(dependency) {
+    this.dependency.push(dependency)
+  }
+
 
 }
-// colect size
- if(element.replace(/[^0-9]/g, '') !== '') {
-size += Number(element.replace(/[^0-9]/g, ''))
 
- }
+let files = []
+let inside = false
 
- if(cleanInput.length -1 === index) {
-  test[test.length-1] += size
-  console.log(test)
- }
+cleanInput.map((element) => {
 
-// change level
-if(element.includes('$ cd ..')) {
-  // base.level--
-  // console.log('tes',test[test.length-1] )
-  // console.log('tes', size)
-  test[test.length-1] += size
-  console.log(test)
-  test.pop()
-  
-  //size = 0
-}
+  if (element.includes('$ cd ') && !element.includes('$ cd ..')) {
+    let file = new Folder()
+    file.name = element.split(' ')[2]
 
-console.log(test)
+    files.push(
+      file
+    )
+  }
 
+  if (index === cleanInput.length - 1) {
+
+    if (level + memLevel === 1) {
+      section++
+    }
+
+    finalArray.push({
+      level: level,
+      total: total,
+      section: section
+    })
+  }
 })
 
-// console.log(base)
+let fileName = ''
 
+cleanInput.map((element) => {
 
+  if (element.includes('$ cd ') && !element.includes('$ cd ..') && files.some((e) => {
+    fileName = e.name
+    return `$ cd ${e.name}` === element
+  })) {
+    inside = true
+  }
 
+  if (inside) {
 
+    if (element.includes('dir')) {
 
-// let level = 0
-// let finalArray = []
-// let total = 0
-// let file = []
-// let memLevel = 0
-// let section = 0
+      files.filter((e) => e.name === element.split(' ')[1])[0].createFolderFather(fileName)
 
-// cleanInput.map((element, index) => {
+      files.filter((e) => e.name === fileName)[0].addDependency({
+        father: fileName,
+        son: element.split(' ')[1]
+      })
+    }
 
+    if (element.replace(/[^0-9]/g, '') !== '') {
+      files.filter((e) => e.name === fileName)[0].calculateTotalSize(Number(element.replace(/[^0-9]/g, '')))
+    }
+  }
+})
 
-//   if (element.replace(/[^0-9]/g, '') !== '') {
-//     total = total + Number(element.replace(/[^0-9]/g, ''))
-//  }
+// add all dependencies
+files.map((element) => {
 
-//     if (element.includes('$') && !element.includes('$ ls') && !element.includes('$ cd ..') && index !== 0) {
+  if (element.dependency.length > 0) {
 
-      
-//       if(level + memLevel === 1) {
-//         section++
-//       }
+    element.dependency.map((e) => {
+      element.addDependencyFile(
+        files.filter((file) => file.name === e.son && element.name === e.father)[0]
+      )
+    })
 
-//       finalArray.push({
-//         level: level + memLevel,
-//         total: total,
-//         section: section
-//       })
-//       level ++
-//       total = 0
-//       memLevel = 0
-//   }
+  }
+})
 
-//   if (element.includes('$ cd ..')) {
-//     memLevel++
-//     level--
-//       }
+// bring the recursive
+const addDependencies = (array) => {
 
-//         if (index === cleanInput.length - 1) {
+  array.map((file) => {
 
-//           if(level + memLevel === 1) {
-//             section++
-//           }
+    // if (array.some(e => e.dependency.includes(file.name))) {
+    //   array.filter(e => e.dependency.includes(file.name))[0].calculateTotalSize(file.totalSize)
+    // }
 
-//           finalArray.push({
-//             level: level,
-//             total: total,
-//             section: section
-//           })
-//         }
-// })
+    if (array.some(e => e.dependency.some(el => el.father === 'a' && el.son === file.name))) {
 
-// finalArray.shift()
+      array.filter(e => e.dependency.some(el => el.father === 'a' && el.son === file.name))[0].calculateTotalSize(file.totalSize)
+    }
 
-// // bug
-// finalArray[0].section = 2
-// console.log(finalArray)
-// console.log(finalArray.filter(e=>e.total< 100000 && e.total > 0))
+    // console.log('in', file.name)
+    // console.log('in', file.totalSize)
+    if (file.dependency.length > 0) {
+      return null
+    } else {
+      // console.log('up', file.name)
+      // console.log('up', file.totalSize)
+      addDependencies(file.dependency)
+      // console.log('down', file.name)
+      // console.log('down', file)
+    }
 
+  })
 
+}
 
+addDependencies(files)
 
+// All folders under or equal to 10000
+let array = []
 
+files.filter(e => e.name !== '/').map((element) => {
 
-// // let tttttt = 0
-// // finalArrayr.filter(e=> e < 100000 && e>0).map((el) => {
-// //   console.log(el)
-// //   tttttt = tttttt + el
-// // })
+  if (element.totalSize < 100000) {
+    array.push(element.totalSize)
+  }
+})
 
-// // console.log(tttttt)
+// console.log(files.filter(e => e.name !== '/'))
+// await Deno.writeTextFile('./xxx.txt', files)
+// console.log(array)
+// console.log(array.reduce((a, b) => a + b))
 
-
-
-
-
-
-
-
-
-
-
-
-
-// // let allDir = []
-// // let allFilesPerDir = []
-// // let total = 0
-// // let dir = ''
-// // let cd = '$ cd /'
-// // let colectDependent = ''
-
-// // cleanInput.map((element, index) => {
-
-// //   if (element.includes('$') && !element.includes('$ ls') && !element.includes('$ cd ..') && index !== 0) {
-// //     allFilesPerDir.push({
-// //       dir: cd.split(' ')[2],
-// //       total: total,
-// //       dependent: allDir.filter((e) => e !== cd.split(' ')[2])
-// //     })
-// //     dir = ''
-// //     total = 0
-// //     cd = element
-// //     allDir = []
-// //   }
-
-// //   if (element.includes('dir')) {
-// //     allDir.push(element.split(' ')[1])
-// //   }
-
-// //   if (element.replace(/[^0-9]/g, '') !== '') {
-// //     total = total + Number(element.replace(/[^0-9]/g, ''))
-// //   }
-
-// //   if (index === cleanInput.length - 1) {
-// //     allFilesPerDir.push({
-// //       dir: cd.split(' ')[2],
-// //       total: total,
-// //       dependent: allDir.filter((e) => e !== cd.split(' ')[2])
-// //     })
-// //   }
-
-// // })
-
-// // // console.log(allFilesPerDir)
-
-
-// // const findTotal = (dependent) => {
-
-// //   return allFilesPerDir.filter(e => e.dir === dependent)[0].total
-// // }
-
-// // // xxx
-// // const findAllDepend = (array) => {
-
-// //   let allDep = [] 
-
-// //   let dep = array
-
-// //   dep.map((el) => {
-// //     allDep.push(el)
-
-// //   })
-
-// //   return allDep
-// // }
-
-// // allFilesPerDir.map((element, index) => {
-
-// //   if (index > 0) {
-// //     if (element.dependent.length > 0) {
-
-// //       element.total += findAllDepend(element.dependent).map((el) => {
-// //         return findTotal(el)
-// //       }).reduce((a, b) => a + b)
-
-// //     }
-// //   }
-// // })
-
-
-// // let totall = 0
-
-// // allFilesPerDir.shift()
-
-// // allFilesPerDir.filter((e) => e.total < 100000).map((el, index) => {
-// //     totall += el.total
-// // })
-
-// // console.log(allFilesPerDir)
-// // console.log(totall)
-
-// // console.log('===')
-
-// // console.log('&&&&', allFilesPerDir.filter((el) => el.total === 0))
+files.map((e) => {
+  console.log(e.name)
+  console.log(e.dependency)
+})
